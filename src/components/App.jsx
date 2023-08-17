@@ -1,3 +1,8 @@
+import Searchbar from '../components/Searchbar/Searchbar'
+import ImageGallery from '../components/ImageGallery/ImageGallery'
+import Button from '../components/Button/Button';
+import Loader from '../components/Loader/Loader';
+// import axios from 'axios';
 export const App = () => {
   return (
     <div
@@ -10,7 +15,11 @@ export const App = () => {
         color: '#010101'
       }}
     >
-      React homework template
+     <Searchbar />
+     <ImageGallery/>
+     <Button/>
+     <Loader/>
     </div>
   );
+  
 };
