@@ -1,32 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import css from '../ImageGalleryItem/ImageGalleryItem.module.css';
 import Modal from '../Modal/Modal';
+
 function ImageGalleryItem({ item }) {
-  const { id, webformatURL, tags } = item;
+  const { webformatURL } = item;
+  const [shownModal, setShownModal] = useState(false);
+
+  const onModal = () => {
+    setShownModal(!shownModal);
+  };
 
   return (
     <li className={css.ImageGalleryItem}>
       <img
-        onClick={this.onModal}
-        src={webformatURL}
-        alt={tags}
+        onClick={onModal}
         className={css.ImageGalleryItemImage}
+        src={webformatURL}
+        alt="img"
       />
-      {this.state.shownModal && <Modal onClose={this.onModal} image={item} />}
+      {shownModal && <Modal onClose={onModal} image={item} />}
     </li>
-    
   );
 }
 
-
 ImageGalleryItem.propTypes = {
-  item: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    webformatURL: PropTypes.string.isRequired,
-    tags: PropTypes.string.isRequired,
-  }).isRequired,
-  
+  item: PropTypes.object,
 };
 
 export default ImageGalleryItem;
+
