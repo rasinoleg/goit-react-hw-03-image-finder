@@ -1,13 +1,11 @@
-import css from '../Modal/Modal.module.css'
 import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
+import css from '../Modal/Modal.module.css';
 
-const ModalRoot = document.querySelector('#ModalRoot');
-
-function Modal({ image, onClose }) {
+const Modal = ({ image, onClose }) => {
   useEffect(() => {
-    const keyDown = (e) => {
+    const keyDown = e => {
       if (e.code === 'Escape') {
         onClose();
       }
@@ -20,7 +18,7 @@ function Modal({ image, onClose }) {
     };
   }, [onClose]);
 
-  const onOverlayClose = (e) => {
+  const onOverlayClose = e => {
     if (e.currentTarget === e.target) {
       onClose();
     }
@@ -29,18 +27,19 @@ function Modal({ image, onClose }) {
   const { largeImageURL } = image;
 
   return createPortal(
-    <div onClick={onOverlayClose} className={css.Overlay}>
-      <div className={css.Modal}>
+    <div onClick={onOverlayClose} className={css.overlay}>
+      <div className={css.modal}>
         <img src={largeImageURL} alt="img" />
       </div>
     </div>,
-    ModalRoot
+    document.getElementById('modal-root') 
   );
-}
-
-export default Modal;
+};
 
 Modal.propTypes = {
   image: PropTypes.object,
   onClose: PropTypes.func,
 };
+
+export default Modal;
+

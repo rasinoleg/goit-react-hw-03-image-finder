@@ -9,12 +9,11 @@ const Button = ({ onClick }) => {
       Load more
     </button>
     </div>
-    
   );
 };
-
-export default Button;
 
 Button.propTypes = {
   onClick: PropTypes.func,
 };
+
+export default Button;

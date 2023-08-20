@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import css from '../Searchbar/Searchbar.module.css';
 import PropTypes from 'prop-types';
-// import axios from 'axios';
 
-export class Searchbar extends Component {
+class Searchbar extends Component {
   state = {
     query: '',
   };
@@ -25,10 +24,6 @@ export class Searchbar extends Component {
     return (
       <header className={css.Searchbar}>
         <form className={css.SearchForm} onSubmit={this.handleSubmit}>
-          <button type="submit" className={css.SearchFormButton}>
-            <span className="button-label">Search</span>
-          </button>
-
           <input
             className={css.SearchFormInput}
             type="text"
@@ -39,6 +34,9 @@ export class Searchbar extends Component {
             autoFocus={autoFocus}
             placeholder={placeholder}
           />
+          <button type="submit" className={css.SearchFormButton}>
+            Search
+          </button>
         </form>
       </header>
     );
