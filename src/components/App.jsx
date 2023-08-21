@@ -49,9 +49,10 @@ export class App extends Component {
       try {
         const data = await getImages({ query, page });
         this.setState({
-          images: data.hits,
+          images: [...prevState.images, ...data.hits],
           loading: false,
         });
+        console.log(data.hits)
       } catch (error) {
         console.error("Error fetching images:", error);
         this.setState({ loading: false });

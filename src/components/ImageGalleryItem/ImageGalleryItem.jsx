@@ -14,7 +14,7 @@ const ImageGalleryItem = ({ item, onClickImage }) => {
         alt={img}
         onClick={() =>
           onClickImage({
-            img: item.previewURL,
+            img: item.largeImageURL,
             alt: img,
           })
         }

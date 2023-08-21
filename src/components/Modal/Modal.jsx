@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 import css from '../Modal/Modal.module.css';
 
+
 const Modal = ({ image, onClose }) => {
   useEffect(() => {
     const keyDown = e => {
@@ -43,7 +44,6 @@ Modal.propTypes = {
 };
 
 export default Modal;
-
 
 
 
