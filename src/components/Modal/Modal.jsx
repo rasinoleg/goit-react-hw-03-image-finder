@@ -24,17 +24,18 @@ const Modal = ({ image, onClose }) => {
     }
   };
 
-  const { largeImageURL } = image;
-
+  const {img} = image;
+  
   return createPortal(
     <div onClick={onOverlayClose} className={css.overlay}>
       <div className={css.modal}>
-        <img src={largeImageURL} alt="img" />
+        <img src={img} alt="img" />
       </div>
     </div>,
     document.getElementById('modal-root') 
   );
 };
+
 
 Modal.propTypes = {
   image: PropTypes.object,
@@ -42,4 +43,7 @@ Modal.propTypes = {
 };
 
 export default Modal;
+
+
+
 
