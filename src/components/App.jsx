@@ -14,6 +14,7 @@ export class App extends Component {
     loading: false,
     showModal: false,
     modalData: null,
+    hasLoaded: false, 
   };
 
   changeQuery = newQuery => {
@@ -21,6 +22,9 @@ export class App extends Component {
       query: newQuery,
       images: [],
       page: 1,
+      hasLoaded: false, 
+    }, () => {
+      this.fetchImages();
     });
   };
 
@@ -38,41 +42,40 @@ export class App extends Component {
     });
   };
 
-  async componentDidUpdate(prevProps, prevState) {
+  fetchImages = async () => {
     const { query, page } = this.state;
-    if (
-      prevState.query !== this.state.query ||
-      prevState.page !== this.state.page
-    ) {
-      this.setState({ loading: true });
+    this.setState({ loading: true });
 
-      try {
-        const data = await getImages({ query, page });
-        this.setState({
-          images: [...prevState.images, ...data.hits],
-          loading: false,
-        });
-        console.log(data.hits)
-      } catch (error) {
-        console.error("Error fetching images:", error);
-        this.setState({ loading: false });
-      }
+    try {
+      const data = await getImages({ query, page });
+      this.setState(prevState => ({
+        images: page === 1 ? data.hits : [...prevState.images, ...data.hits],
+        loading: false,
+        hasLoaded: true, 
+      }));
+    } catch (error) {
+      console.error("Error fetching images:", error);
+      this.setState({ loading: false });
     }
-  }
+  };
 
   handleLoadMore = () => {
-    this.setState(prevState => ({ page: prevState.page + 1 }));
+    this.setState(prevState => ({ page: prevState.page + 1 }), () => {
+      this.fetchImages();
+    });
   };
 
   render() {
-    const { showModal, modalData, images, loading } = this.state;
+    const { showModal, modalData, images, loading, hasLoaded } = this.state;
     
     return (
       <div>
         <Searchbar onSubmit={this.changeQuery} />
         <ImageGallery images={images} onClickImage={this.openModal} />
         {loading && <Loader />}
-        <Button onClick={this.handleLoadMore} />
+        {hasLoaded && ( // Використовуємо умовний рендерінг
+          <Button onClick={this.handleLoadMore} />
+        )}
         <div id="modal-root"> 
           {showModal && (
             <Modal image={modalData} onClose={this.closeModal} />
@@ -84,4 +87,5 @@ export class App extends Component {
 }
 
 export default App;
+
 
